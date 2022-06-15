@@ -4,6 +4,10 @@ Sample app that lets you schedule pickups and track them. This is gonna be aweso
 
 ## Installation
 
+### Clone the repo
+
+`git clone https://github.com/plemiszki/revivin-assessment.git`
+
 ### Install Dependencies
 
 `bundle install`
@@ -12,7 +16,7 @@ Sample app that lets you schedule pickups and track them. This is gonna be aweso
 
 ### Compile Local Assets
 
-`npm run dev`
+`npm run build`
 
 ### Create Local Database
 `rake db:create db:migrate`
