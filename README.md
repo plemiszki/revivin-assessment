@@ -1,24 +1,21 @@
-# README
+# Revivin Assessment
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sample app that lets you schedule pickups and track them. This is gonna be awesome.
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+### Install Dependencies
 
-* System dependencies
+`bundle install`
 
-* Configuration
+`npm install`
 
-* Database creation
+### Compile Local Assets
 
-* Database initialization
+`npm run dev`
 
-* How to run the test suite
+### Create Local Database
+`rake db:create db:migrate`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Navigate to Local Server
+`https://localhost:3000`
