@@ -29,3 +29,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore Node Modules
+/node_modules/*
+
+# Ignore Webpack Bundles
+/app/javascript/bundle.js
+/app/javascript/bundle.js.map
