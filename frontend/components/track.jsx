@@ -90,7 +90,7 @@ export default function Track() {
           { renderErrorMessage() }
           <p>Please enter your tracking number below.</p>
           <form onSubmit={ (e) => { submitForm(e) }}>
-            <input type="text" onChange={ (e) => setTrackingNumber(e.target.value) } value={ trackingNumber } maxlength={ 20 }></input>
+            <input type="text" onChange={ (e) => setTrackingNumber(e.target.value) } value={ trackingNumber } maxLength={ 20 }></input>
             <input type="submit" value="Track" />
           </form>
         </div>
