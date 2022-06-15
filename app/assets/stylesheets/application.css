@@ -17,3 +17,13 @@
 body {
   background-color: #F5F6F7;
 }
+
+.date-picker input {
+  font-size: 32px;
+  padding: 15px;
+  text-align: center;
+}
+
+.date-picker {
+  margin-bottom: 50px;
+}

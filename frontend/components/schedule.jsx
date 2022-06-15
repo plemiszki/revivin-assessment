@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function Schedule() {
 
@@ -23,10 +25,12 @@ export default function Schedule() {
           <a href="/">
             <div className="logo"></div>
           </a>
+
           <h1>Schedule a Pickup</h1>
           <p>Please enter the details of your pickup below.</p>
           <form onSubmit={ (e) => { submitForm(e) }}>
-            <div className="fields-container">
+            <DatePicker wrapperClassName="date-picker" selected={ date } onChange={ (date) => setDate(date) } />
+            <div className="address-fields-container">
               <div>
                 <label htmlFor="address1">Address Line 1</label>
                 <input id="address1" type="text" onChange={ (e) => setAddress1(e.target.value) } value={ address1 } maxLength={ 30 }></input>
@@ -83,7 +87,7 @@ export default function Schedule() {
         p {
           margin-bottom: 30px;
         }
-        div.fields-container {
+        div.address-fields-container {
           text-align: right;
           margin-bottom: 30px;
         }
