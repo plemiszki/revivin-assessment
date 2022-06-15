@@ -8,6 +8,8 @@ Sample app that lets you schedule pickups and track them. This is gonna be aweso
 
 `git clone https://github.com/plemiszki/revivin-assessment.git`
 
+`cd revivin-assessment`
+
 ### Install Dependencies
 
 `bundle install`
@@ -21,5 +23,8 @@ Sample app that lets you schedule pickups and track them. This is gonna be aweso
 ### Create Local Database
 `rake db:create db:migrate`
 
+### Start Local Server
+`rails s`
+
 ### Navigate to Local Server
-`https://localhost:3000`
+[Click Here](http://localhost:3000)
