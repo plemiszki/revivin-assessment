@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   get "/schedule" => "public#schedule"
   get "/track" => "public#track"
 
+  namespace :api do
+    resources :pickups, only: [:show, :create]
+  end
+
 end
