@@ -10,12 +10,161 @@ export default function Schedule() {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [zip, setZip] = useState('')
-  const [errorText, setErrorText] = useState()
+  const [errors, setErrors] = useState([])
   const [trackingNumber, setTrackingNumber] = useState()
+
+  const clearForm = () => {
+    setTrackingNumber(null)
+    setAddress1('')
+    setAddress2('')
+    setCity('')
+    setState('')
+    setZip('')
+  }
 
   const submitForm = async (e) => {
     e.preventDefault()
-    console.log('submit form');
+    setErrors([])
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
+    fetch('/api/pickups', {
+      method: 'POST',
+      headers: {
+        'x-csrf-token': csrfToken,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pickup: {
+          pickup_date: date,
+          address1,
+          address2,
+          city,
+          state,
+          zip,
+        }
+      })
+    })
+    .then(async (response) => {
+      if (response.status === 422) {
+        let result = await response.json()
+        setErrors(result.errors)
+        window.scrollTo(0, 0)
+        return
+      }
+      if (!response.ok) {
+        setErrors(['There was an unknown error.'])
+        window.scrollTo(0, 0)
+        return
+      }
+      let result = await response.json()
+      setTrackingNumber(result.tracking_number)
+      window.scrollTo(0, 0)
+    })
+  }
+
+  const renderErrors = () => {
+    if (errors.length === 0) {
+      return
+    }
+    return(
+      <>
+        <ul>
+          { errors.map((error, index) => {
+            return <li key={ index }>{ error }</li>
+          }) }
+        </ul>
+        <style jsx>{`
+          ul {
+            margin-top: -10px;
+            display: inline-block;
+            padding: 20px;
+            background: pink;
+            margin-bottom: 20px;
+            border-radius: 6px;
+          }
+          li {
+            list-style: none;
+          }
+          li:not(:last-of-type) {
+            margin-bottom: 10px;
+          }
+        `}</style>
+      </>
+    )
+  }
+
+  if (trackingNumber) {
+    return(
+      <>
+        <div>
+          <div className="inner-container">
+            <a href="/">
+              <div className="logo"></div>
+            </a>
+            <h1>Thank you.</h1>
+            <p>Your tracking number is {trackingNumber}</p>
+            <a className="button" onClick={ () => { clearForm() } }>Schedule Another Pickup</a>
+            <a className="button" href="/track">Track a Pickup</a>
+          </div>
+        </div>
+        <style jsx>{`
+          .inner-container {
+            font-family: arial;
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            padding: 50px;
+            box-sizing: border-box;
+            box-shadow: 1px 2px 3px 0px #e6e9ec;
+            margin-bottom: 50px;
+          }
+          .logo {
+            width: 100%;
+            height: 50px;
+            background-image: url(/logo.svg);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            margin-bottom: 50px;
+          }
+          h1 {
+            margin: 0;
+            font-size: 40px;
+          }
+          h1, p {
+            text-align: center;
+          }
+          p {
+            font-size: 30px;
+            margin-bottom: 30px;
+          }
+          a.button {
+            display: block;
+            background-color: blue;
+            text-decoration: none;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 32px;
+            text-align: center;
+            box-sizing: border-box;
+            font-family: arial;
+            width: 60%;
+            margin: auto;
+          }
+          a.button:not(:last-of-type) {
+            margin-top: 50px;
+            margin-bottom: 50px;
+          }
+          a.button:hover {
+            background-color: #4c4cfe;
+          }
+        `}</style>
+      </>
+    )
   }
 
   return(
@@ -28,6 +177,7 @@ export default function Schedule() {
 
           <h1>Schedule a Pickup</h1>
           <p>Please enter the details of your pickup below.</p>
+          { renderErrors() }
           <form onSubmit={ (e) => { submitForm(e) }}>
             <DatePicker wrapperClassName="date-picker" selected={ date } onChange={ (date) => setDate(date) } />
             <div className="address-fields-container">
